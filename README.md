@@ -48,15 +48,15 @@ You can install Postman via this website: https://www.postman.com/downloads/
     (You might want to use `cargo check` if you only need to verify your work without running the app.)
 
 ## Mandatory Checklists (Publisher)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
+-   [v] Clone https://gitlab.com/ichlaffterlalu/bambangshop to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Subscriber model struct.`
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Subscriber repository.`
-    -   [ ] Commit: `Implement list_all function in Subscriber repository.`
-    -   [ ] Commit: `Implement delete function in Subscriber repository.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
+    -   [v] Commit: `Create Subscriber model struct.`
+    -   [v] Commit: `Create Notification model struct.`
+    -   [v] Commit: `Create Subscriber database and Subscriber repository struct skeleton.`
+    -   [v] Commit: `Implement add function in Subscriber repository.`
+    -   [v] Commit: `Implement list_all function in Subscriber repository.`
+    -   [v] Commit: `Implement delete function in Subscriber repository.`
+    -   [v] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -77,6 +77,15 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+
+1. In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber is defined as an interface. Explain based on your understanding of Observer design patterns, do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model struct is enough?
+
+- Dalam diagram Observer pattern yang dijelaskan oleh buku Head First Design Patterns, Subscriber didefinisikan sebagai interface. Penggunaan interface atau trait dalam Rust sangat berguna jika ada berbagai jenis Subscriber, yang memungkinkan kita untuk menambahkan jenis-jenis Subscriber baru dengan mudah. Hal ini sesuai dengan Open-Closed Principle, yang menyarankan bahwa perangkat lunak harus terbuka untuk ekstensi tapi tertutup untuk modifikasi. Namun, untuk kasus BambangShop saat ini, jika semua Subscriber bersifat seragam dan tidak memerlukan variasi dalam implementasi, penggunaan satu Model struct mungkin sudah cukup.
+
+2. id in Program and url in Subscriber is intended to be unique. Explain based on your understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently use is necessary for this case?
+- Menggunakan DashMap lebih disarankan daripada Vec dalam kasus ini, terutama karena id di Program dan url di Subscriber harus unik. DashMap memungkinkan penyimpanan dan akses data secara efisien melalui key-value pair, yang memudahkan dalam pencarian, penambahan, dan penghapusan data dengan cepat. Dibandingkan dengan Vec, di mana kita perlu melakukan iterasi untuk mencari atau menghapus item, DashMap lebih efektif dan efisien untuk menjaga uniknya setiap elemen.
+3. When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?
+- Dalam konteks Rust yang memiliki ketatnya keamanan pada konkurensi, penggunaan DashMap adalah pilihan yang tepat karena DashMap sudah dirancang untuk penggunaan konkuren yang aman, menghindari masalah race condition dan deadlock. Ini lebih tepat daripada menggunakan HashMap standar yang tidak aman untuk akses konkuren tanpa mekanisme sinkronisasi yang tepat. Meskipun demikian, penggunaan pattern Singleton masih relevan untuk memastikan bahwa hanya ada satu instance dari DashMap yang digunakan (dalam hal ini adalah SUBSCRIBERS) di seluruh program, yang menjamin konsistensi dan keamanan akses ke data bersama.
 
 #### Reflection Publisher-2
 
